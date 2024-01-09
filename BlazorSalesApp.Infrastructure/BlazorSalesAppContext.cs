@@ -14,6 +14,11 @@ public class BlazorSalesAppContext : DbContext
     public DbSet<Window> Windows { get; set; }
     public DbSet<SubElement> SubElements { get; set; }
 
+    public BlazorSalesAppContext(DbContextOptions<BlazorSalesAppContext> options)
+        : base(options)
+    {
+    }
+
     public override int SaveChanges()
     {
         return base.SaveChangesAsync(CancellationToken.None).GetAwaiter().GetResult();
