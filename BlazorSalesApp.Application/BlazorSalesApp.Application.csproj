@@ -6,4 +6,12 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <NoWarn>1701;1702;1591;8618</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BlazorSalesApp.Domain\BlazorSalesApp.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

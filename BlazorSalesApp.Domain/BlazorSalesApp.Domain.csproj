@@ -6,9 +6,12 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <NoWarn>1701;1702;1591;8618</NoWarn>
+    </PropertyGroup>
+
     <ItemGroup>
-      <Folder Include="Models\" />
-      <Folder Include="Services\" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
     </ItemGroup>
 
 </Project>

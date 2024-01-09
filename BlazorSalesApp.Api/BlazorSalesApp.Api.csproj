@@ -12,4 +12,11 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\BlazorSalesApp.Application\BlazorSalesApp.Application.csproj" />
+      <ProjectReference Include="..\BlazorSalesApp.Domain\BlazorSalesApp.Domain.csproj" />
+      <ProjectReference Include="..\BlazorSalesApp.Infrastructure\BlazorSalesApp.Infrastructure.csproj" />
+      <ProjectReference Include="..\BlazorSalesApp.SharedApiContracts\BlazorSalesApp.SharedApiContracts.csproj" />
+    </ItemGroup>
+
 </Project>
