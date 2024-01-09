@@ -1,0 +1,12 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+*/_logs
+
+*/appsettings.[Dd]evelopment.json
+*/appsettings.[Pp]roduction.json
+*/appsettings.[Tt]est.json
+
+*/.idea/*
