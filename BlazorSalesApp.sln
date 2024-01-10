@@ -1,16 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSalesApp.Application", "BlazorSalesApp.Application\BlazorSalesApp.Application.csproj", "{DEFEC76B-2F0B-48CE-9289-15BB0CC66844}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSalesApp.Application", "src\BlazorSalesApp.Application\BlazorSalesApp.Application.csproj", "{DEFEC76B-2F0B-48CE-9289-15BB0CC66844}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSalesApp.Domain", "BlazorSalesApp.Domain\BlazorSalesApp.Domain.csproj", "{85546E55-F499-44FA-A028-957BD7CC5D2B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSalesApp.Domain", "src\BlazorSalesApp.Domain\BlazorSalesApp.Domain.csproj", "{85546E55-F499-44FA-A028-957BD7CC5D2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSalesApp.Infrastructure", "BlazorSalesApp.Infrastructure\BlazorSalesApp.Infrastructure.csproj", "{FD656334-1D0B-42B4-B41E-5836C613751D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSalesApp.Infrastructure", "src\BlazorSalesApp.Infrastructure\BlazorSalesApp.Infrastructure.csproj", "{FD656334-1D0B-42B4-B41E-5836C613751D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSalesApp.SharedApiContracts", "BlazorSalesApp.SharedApiContracts\BlazorSalesApp.SharedApiContracts.csproj", "{9DBE19C6-09CA-45C8-9AE8-58CBB6A5C929}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSalesApp.SharedApiContracts", "src\BlazorSalesApp.SharedApiContracts\BlazorSalesApp.SharedApiContracts.csproj", "{9DBE19C6-09CA-45C8-9AE8-58CBB6A5C929}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSalesApp.Api", "BlazorSalesApp.Api\BlazorSalesApp.Api.csproj", "{8A62434F-17C5-4CDF-B800-522E111A8094}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSalesApp.Api", "src\BlazorSalesApp.Api\BlazorSalesApp.Api.csproj", "{8A62434F-17C5-4CDF-B800-522E111A8094}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSalesApp.Ui", "BlazorSalesApp.Ui\BlazorSalesApp.Ui.csproj", "{6C131D79-09DB-409F-89D0-BE105CCC760A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSalesApp.Ui", "src\BlazorSalesApp.Ui\BlazorSalesApp.Ui.csproj", "{6C131D79-09DB-409F-89D0-BE105CCC760A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DE3DB88E-8112-42EC-A107-25ADE1703856}"
 EndProject
