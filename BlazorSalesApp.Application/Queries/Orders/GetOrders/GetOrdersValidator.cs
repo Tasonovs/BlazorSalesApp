@@ -1,4 +1,5 @@
-﻿using BlazorSalesApp.SharedApiContracts.Common;
+﻿using BlazorSalesApp.Application.Common.Validation;
+using BlazorSalesApp.SharedApiContracts.Common;
 using BlazorSalesApp.SharedApiContracts.Orders;
 using FluentValidation;
 
@@ -8,7 +9,7 @@ public class GetOrdersValidator : AbstractValidator<PaginatedRequest<OrderDto>>
 {
     public GetOrdersValidator()
     {
-        RuleFor(request => request.PageSize)
-            .GreaterThan(0);
+        RuleFor(request => request)
+            .SetValidator(new PaginatedRequestValidator<OrderDto>());
     }
 }

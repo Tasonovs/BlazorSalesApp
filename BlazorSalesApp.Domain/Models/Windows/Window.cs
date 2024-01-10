@@ -12,7 +12,5 @@ public class Window : BaseEntity
 
     public int QuantityOfWindows { get; set; }
 
-    public int TotalSubElements { get; set; }
-
     public List<SubElement> SubElements { get; set; } = [];
 }
