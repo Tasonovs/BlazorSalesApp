@@ -4,84 +4,84 @@
 
 <PageTitle>Home</PageTitle>
 
-<MudGrid>
-    <MudItem xs="3">
-    </MudItem>
-    <MudItem xs="6">
-        <h1 class="text-center mb-5">Home</h1>
-    </MudItem>
-    <MudItem xs="3" class="text-end">
-        <MudButton
-            Target="_blank"
-            Href="/orders/edit/"
-            Color="Color.Primary"
-            Variant="Variant.Filled"
-            StartIcon="@Icons.Material.Filled.Add">
-            Add
-        </MudButton>
-    </MudItem>
-</MudGrid>
+<MudContainer MaxWidth="MaxWidth.Large">
+    <MudGrid>
+        <MudItem xs="3">
+        </MudItem>
+        <MudItem xs="6">
+            <h1 class="text-center mb-5">Home</h1>
+        </MudItem>
+        <MudItem xs="3" class="text-end">
+            <MudButton
+                Href="/orders/edit/"
+                Color="Color.Primary"
+                Variant="Variant.Filled"
+                StartIcon="@Icons.Material.Filled.Add">
+                Add
+            </MudButton>
+        </MudItem>
+    </MudGrid>
 
 
-@if (orders == null)
-{
-    <p>
-        <em>Loading...</em>
-    </p>
-}
-else
-{
-    <MudDataGrid Items="@orders" ReadOnly="true">
-        <Columns>
-            <HierarchyColumn T="OrderDto"/>
-            <PropertyColumn Property="order => order.Id" Title="Id"/>
-            <PropertyColumn Property="order => order.Name" Title="Name"/>
-            <PropertyColumn Property="order => order.State.Label" Title="State"/>
-            <TemplateColumn CellClass="d-flex justify-end">
-                <CellTemplate>
-                    <MudButton
-                        Target="_blank"
-                        Href="@($"/orders/edit/{context.Item.Id}")"
-                        StartIcon="@Icons.Material.Filled.Edit">
-                        Edit
-                    </MudButton>
-                </CellTemplate>
-            </TemplateColumn>
-        </Columns>
-        <ChildRowContent>
-            <MudCard Class="border-none shadow-none">
-                <MudCardHeader>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.h6">@context.Item.Name windows</MudText>
-                    </CardHeaderContent>
-                </MudCardHeader>
-                <MudCardContent>
-                    <MudSimpleTable Class="border-none shadow-none" Style="overflow-x: auto;">
-                        <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Quantity of windows</th>
-                            <th>Total sub-elements quantity</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach (var window in context.Item.Windows)
-                        {
+    @if (orders == null)
+    {
+        <p>
+            <em>Loading...</em>
+        </p>
+    }
+    else
+    {
+        <MudDataGrid Items="@orders" ReadOnly="true">
+            <Columns>
+                <HierarchyColumn T="OrderDto"/>
+                <PropertyColumn Property="order => order.Id" Title="Id"/>
+                <PropertyColumn Property="order => order.Name" Title="Name"/>
+                <PropertyColumn Property="order => order.State.Label" Title="State"/>
+                <TemplateColumn CellClass="d-flex justify-end">
+                    <CellTemplate>
+                        <MudButton
+                            Href="@($"/orders/edit/{context.Item.Id}")"
+                            StartIcon="@Icons.Material.Filled.Edit">
+                            Edit
+                        </MudButton>
+                    </CellTemplate>
+                </TemplateColumn>
+            </Columns>
+            <ChildRowContent>
+                <MudCard Class="border-none shadow-none">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">@context.Item.Name windows</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudSimpleTable Class="border-none shadow-none" Style="overflow-x: auto;">
+                            <thead>
                             <tr>
-                                <th>@window.Id</th>
-                                <th>@window.Name</th>
-                                <th>@window.TotalSubElements</th>
-                                <th>@window.QuantityOfWindows</th>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Quantity of windows</th>
+                                <th>Total sub-elements quantity</th>
                             </tr>
-                        }
-                        </tbody>
-                    </MudSimpleTable>
-                </MudCardContent>
-            </MudCard>
-        </ChildRowContent>
-    </MudDataGrid>
-}
+                            </thead>
+                            <tbody>
+                            @foreach (var window in context.Item.Windows)
+                            {
+                                <tr>
+                                    <th>@window.Id</th>
+                                    <th>@window.Name</th>
+                                    <th>@window.TotalSubElements</th>
+                                    <th>@window.QuantityOfWindows</th>
+                                </tr>
+                            }
+                            </tbody>
+                        </MudSimpleTable>
+                    </MudCardContent>
+                </MudCard>
+            </ChildRowContent>
+        </MudDataGrid>
+    }
+</MudContainer>
 
 @code {
     private IEnumerable<OrderDto>? orders;
