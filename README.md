@@ -31,7 +31,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Installation
 
-1. Create `BlazorSalesApp.Infrastructure\appsettings.migration.Development.json` and `BlazorSalesApp.Api\appsettings.Development.json` with the same content and connection string to database
+1. Create `BlazorSalesApp.Infrastructure\appsettings.migration.Development.json` and `BlazorSalesApp.Api\appsettings.Development.json` with the same content and connection string to a database
    ```json
     {
         "ConnectionStrings": {
@@ -39,7 +39,7 @@ To get a local copy up and running follow these simple example steps.
         }
     }
    ```
-2. Update a database
+2. Update the database
    ```sh
    \src\BlazorSalesApp.Infrastructure> dotnet ef database update
    ```
