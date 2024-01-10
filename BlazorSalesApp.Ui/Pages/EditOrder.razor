@@ -1,0 +1,222 @@
+﻿@page "/orders/edit/{id:int?}"
+@using BlazorSalesApp.SharedApiContracts.Orders
+@using System.Net
+@using BlazorSalesApp.SharedApiContracts.Common
+@using BlazorSalesApp.SharedApiContracts.SubElements
+@using BlazorSalesApp.SharedApiContracts.Windows
+
+<PageTitle>
+    @(string.Format("{0} {1}", Id == null ? "Create" : "Update", "order"))
+</PageTitle>
+
+<h1 class="text-center">
+    @(string.Format("{0} {1}", Id == null ? "Create" : "Update", "order"))
+</h1>
+
+@if (_order is null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    <MudContainer MaxWidth="MaxWidth.Medium">
+        <EditForm Model="@_order">
+            <MudTextField
+                @bind-Value="_order.Name"
+                Label="Name"
+                Class="mt-3"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"/>
+            <MudSelect
+                @bind-Value="_order.StateId"
+                Label="Select state"
+                Text="@(_states.FirstOrDefault(l => l.Id == _order.StateId)?.Label)"
+                Variant="Variant.Outlined">
+                @foreach (var item in _states)
+                {
+                    <MudSelectItem Value="@item.Id">@item.Label</MudSelectItem>
+                }
+            </MudSelect>
+
+            @foreach (var window in _order.Windows)
+            {
+                <MudGrid>
+                    <MudItem xs="6">
+                        <MudTextField
+                            @bind-Value="window.Name"
+                            Label="Name"
+                            Class="mt-3"
+                            Margin="Margin.Dense"
+                            Variant="Variant.Outlined"/>
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudTextField
+                            @bind-Value="window.QuantityOfWindows"
+                            Label="Quantity of windows"
+                            Class="mt-3"
+                            Margin="Margin.Dense"
+                            Variant="Variant.Outlined"/>
+                    </MudItem>
+                </MudGrid>
+                @foreach (var subElement in window.SubElements)
+                {
+                    <MudGrid>
+                        <MudItem xs="4">
+                            <MudTextField
+                                @bind-Value="subElement.Width"
+                                Label="Width"
+                                Class="mt-3"
+                                Margin="Margin.Dense"
+                                Variant="Variant.Outlined"/>
+                        </MudItem>
+                        <MudItem xs="4">
+                            <MudTextField
+                                @bind-Value="subElement.Height"
+                                Label="Height"
+                                Class="mt-3"
+                                Margin="Margin.Dense"
+                                Variant="Variant.Outlined"/>
+                        </MudItem>
+                        <MudItem xs="4">
+                            <MudSelect
+                                @bind-Value="subElement.TypeId"
+                                Label="Select type"
+                                Text="@(_types.FirstOrDefault(l => l.Id == _order.StateId)?.Label)"
+                                Variant="Variant.Outlined">
+                                @foreach (var item in _types)
+                                {
+                                    <MudSelectItem Value="@item.Id">@item.Label</MudSelectItem>
+                                }
+                            </MudSelect>
+                        </MudItem>
+                    </MudGrid>
+                }
+
+                <div class="mb-5">
+                    <MudButton
+                        Class="mt-3"
+                        Variant="Variant.Outlined"
+                        Color="Color.Inherit"
+                        OnClick="() => window.SubElements.Add(new EditSubElementRequest())">
+                        + sub-element
+                    </MudButton>
+                </div>
+            }
+
+            <div class="mb-5">
+                <MudButton
+                    Class="mt-3"
+                    Variant="Variant.Outlined"
+                    Color="Color.Inherit"
+                    OnClick="() => _order.Windows.Add(new EditWindowRequest())">
+                    + window
+                </MudButton>
+            </div>
+
+            <div class="text-end">
+                <MudButton
+                    Disabled="@_savingReview"
+                    Variant="Variant.Outlined"
+                    Color="Color.Inherit"
+                    OnClick="() => SubmitFormAsync()">
+                    @if (_savingReview)
+                    {
+                        <MudProgressCircular Size="Size.Small" Indeterminate="true"/>
+                        <MudText Class="mx-1">Loading...</MudText>
+                    }
+                    else
+                    {
+                        <span class="mud-button-label">Save</span>
+                    }
+                </MudButton>
+            </div>
+        </EditForm>
+    </MudContainer>
+}
+
+@code {
+    [Parameter] public int? Id { get; set; }
+
+    private UpdateOrderRequest? _order;
+
+    private List<LookupViewModel> _states = [];
+    private List<LookupViewModel> _types = [];
+
+    private bool _savingReview = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _states = await GetLookupDataAsync("api/lookups/states");
+        _types = await GetLookupDataAsync("api/lookups/types");
+        await GetReviewAsync();
+    }
+
+    private async Task<List<LookupViewModel>> GetLookupDataAsync(string url)
+    {
+        var httpResponseMessage = await HttpClient.GetAsync(url);
+        return (await httpResponseMessage.Content.ReadFromJsonAsync<List<LookupViewModel>>())!;
+    }
+
+    private async Task GetReviewAsync()
+    {
+        _order = new UpdateOrderRequest();
+        if (Id is null)
+        {
+            return;
+        }
+
+        var httpResponseMessage = await HttpClient.GetAsync($"api/orders/{Id}");
+        if (httpResponseMessage.StatusCode == HttpStatusCode.OK)
+        {
+            var orderDto = (await httpResponseMessage.Content.ReadFromJsonAsync<OrderDto>())!;
+            _order.Id = orderDto.Id;
+            _order.Name = orderDto.Name;
+            _order.StateId = orderDto.State.Id;
+
+            _order.Windows = orderDto.Windows.Select(window => new EditWindowRequest()
+                {
+                    Name = window.Name,
+                    QuantityOfWindows = window.QuantityOfWindows,
+                    Id = window.Id,
+                    SubElements = window.SubElements.Select(element => new EditSubElementRequest()
+                        {
+                            Id = element.Id,
+                            TypeId = element.Type.Id,
+                            Height = element.Height,
+                            Width = element.Width,
+                        })
+                        .ToList(),
+                })
+                .ToList();
+        }
+    }
+
+    private async Task SubmitFormAsync()
+    {
+        _savingReview = true;
+
+        var response = Id == default
+            ? await CreateReviewAsync()
+            : await UpdateReviewAsync();
+
+        _savingReview = false;
+
+        if (response.StatusCode == HttpStatusCode.OK)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+    }
+
+    private Task<HttpResponseMessage> CreateReviewAsync()
+    {
+        return HttpClient.PostAsJsonAsync("/api/orders", _order);
+    }
+
+    private Task<HttpResponseMessage> UpdateReviewAsync()
+    {
+        return HttpClient.PutAsJsonAsync($"/api/orders/{Id!}", _order);
+    }
+
+}

@@ -10,6 +10,16 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0"/>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" PrivateAssets="all"/>
+        <PackageReference Include="MudBlazor" Version="6.12.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BlazorSalesApp.SharedApiContracts\BlazorSalesApp.SharedApiContracts.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\js\easymde.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\js\markdownEditor.js" />
     </ItemGroup>
 
 </Project>
