@@ -19,4 +19,8 @@ public class OrdersController : ControllerBase
     [HttpGet]
     public Task<PaginatedResponse<OrderDto>> GetOrders([FromQuery] PaginatedRequest<OrderDto> request) =>
         _mediator.Send(request);
+
+    [HttpPost]
+    public Task<EntityIdResponse> CreateOrder([FromBody] CreateOrderRequest request) =>
+        _mediator.Send(request);
 }
