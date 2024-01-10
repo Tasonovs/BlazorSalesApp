@@ -1,0 +1,15 @@
+﻿using BlazorSalesApp.SharedApiContracts.Common;
+using BlazorSalesApp.SharedApiContracts.Windows;
+
+namespace BlazorSalesApp.SharedApiContracts.Orders;
+
+public class OrderDto
+{
+    public long Id { get; set; }
+
+    public string Name { get; set; }
+
+    public LookupViewModel State { get; set; }
+
+    public List<WindowDto> Windows { get; set; }
+}
