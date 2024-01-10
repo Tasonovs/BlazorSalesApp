@@ -23,4 +23,11 @@ public class OrdersController : ControllerBase
     [HttpPost]
     public Task<EntityIdResponse> CreateOrder([FromBody] CreateOrderRequest request) =>
         _mediator.Send(request);
+
+    [HttpPut("{id:long}")]
+    public Task<EntityIdResponse> UpdateOrder(long id, [FromBody] UpdateOrderRequest request)
+    {
+        request.Id = id;
+        return _mediator.Send(request);
+    }
 }

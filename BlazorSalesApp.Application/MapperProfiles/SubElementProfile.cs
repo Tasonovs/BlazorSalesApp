@@ -11,9 +11,8 @@ public class SubElementProfile : Profile
     {
         CreateMap<SubElement, SubElementDto>(MemberList.Destination);
         
-        CreateMap<CreateSubElementRequest, SubElement>(MemberList.Destination)
+        CreateMap<EditSubElementRequest, SubElement>(MemberList.Destination)
             .IgnoreAuditProperties()
-            .ForMember(dest => dest.Id, cfg => cfg.Ignore())
             .ForMember(dest => dest.Type, cfg => cfg.Ignore());
     }
 }

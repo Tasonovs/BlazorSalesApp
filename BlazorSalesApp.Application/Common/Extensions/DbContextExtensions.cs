@@ -4,15 +4,15 @@ namespace BlazorSalesApp.Application.Common.Extensions;
 
 public static class DbContextExtensions
 {
-    public static void UpdateChildCollection<TId, TChild>(
+    public static List<TChild> UpdateChildCollection<TId, TChild>(
         this DbContext dbContext,
-        IEnumerable<TChild> dbItems,
-        IEnumerable<TChild> newItems,
+        List<TChild> dbItems,
+        List<TChild> newItems,
         Func<TChild, TId> idSelector) where TChild : class where TId : notnull
     {
         if (!dbItems.Any() && !newItems.Any())
         {
-            return;
+            return [];
         }
 
         var original = dbItems
@@ -25,18 +25,25 @@ public static class DbContextExtensions
             .Where(pair => !updated.ContainsKey(pair.Key))
             .ToList();
         toRemove.ForEach(i =>
-            dbContext.Set<TChild>().Remove(i.Value));
+        {
+            dbContext.Set<TChild>().Remove(i.Value);
+        });
 
         var toUpdate = original
             .Where(i => updated.ContainsKey(i.Key))
             .ToList();
-        toUpdate.ForEach(pair =>
-            dbContext.Entry(pair.Value).CurrentValues.SetValues(updated[pair.Key]));
+        toUpdate.ForEach(pair => { 
+            dbContext.Entry(pair.Value).CurrentValues.SetValues(updated[pair.Key]);
+        });
 
         var toAdd = newItems
             .Where(child => idSelector(child).Equals((TId) default!))
             .ToList();
         toAdd.ForEach(child =>
-            dbContext.Set<TChild>().Add(child));
+        {
+            dbContext.Set<TChild>().Add(child);
+        });
+
+        return toAdd.Concat(toUpdate.Select(pair => pair.Value)).ToList();
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace BlazorSalesApp.Domain.Models.Common;
 
-public class BaseEntity
+public class BaseEntity : IHasId
 {
     public long Id { get; set; }
     

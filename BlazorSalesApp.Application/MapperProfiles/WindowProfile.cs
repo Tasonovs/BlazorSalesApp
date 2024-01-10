@@ -11,8 +11,7 @@ public class WindowProfile : Profile
     {
         CreateMap<Window, WindowDto>(MemberList.Destination);
         
-        CreateMap<CreateWindowRequest, Window>(MemberList.Destination)
-            .IgnoreAuditProperties()
-            .ForMember(dest => dest.Id, cfg => cfg.Ignore());
+        CreateMap<EditWindowRequest, Window>(MemberList.Destination)
+            .IgnoreAuditProperties();
     }
 }
