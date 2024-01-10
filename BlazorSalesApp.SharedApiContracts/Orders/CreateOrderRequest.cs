@@ -10,5 +10,5 @@ public class CreateOrderRequest : IRequest<EntityIdResponse>
 
     public long StateId { get; set; }
 
-    public List<EditWindowRequest> Windows { get; set; }
+    public List<EditWindowRequest> Windows { get; set; } = [];
 }

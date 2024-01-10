@@ -16,6 +16,10 @@ public class OrdersController : ControllerBase
         _mediator = mediator;
     }
 
+    [HttpGet("{Id:long}")]
+    public Task<OrderDto> GetOrderById([FromRoute] GetByIdRequest<OrderDto> request) =>
+        _mediator.Send(request);
+
     [HttpGet]
     public Task<PaginatedResponse<OrderDto>> GetOrders([FromQuery] PaginatedRequest<OrderDto> request) =>
         _mediator.Send(request);

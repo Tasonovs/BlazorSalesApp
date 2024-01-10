@@ -1,4 +1,3 @@
-using System.Reflection;
 using BlazorSalesApp.Api.Startup;
 using BlazorSalesApp.Application;
 using BlazorSalesApp.Infrastructure;
@@ -20,9 +19,23 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddAutoMapper(cfg => cfg.AddMaps(typeof(ApplicationModule).Assembly));
 builder.Services.AddCustomValidation(typeof(ApplicationModule).Assembly);
 
+const string corsPolicyName = "DefaultCorsPolicy";
+var allowedOrigins = builder.Configuration
+    .GetSection("AllowedOrigins")
+    .GetChildren()
+    .Select(conf => conf.Value!)
+    .ToArray();
+builder.Services.AddCors(options =>
+    options.AddPolicy(name: corsPolicyName,
+        policy =>
+            policy
+                .WithOrigins(allowedOrigins)
+                .AllowCredentials()
+                .AllowAnyHeader()
+                .AllowAnyMethod()));
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -31,6 +44,7 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseCors(corsPolicyName);
 
 app.MapControllers();
 

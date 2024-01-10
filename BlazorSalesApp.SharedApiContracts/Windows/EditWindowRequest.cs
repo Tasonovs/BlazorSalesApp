@@ -10,5 +10,5 @@ public class EditWindowRequest
 
     public int QuantityOfWindows { get; set; }
 
-    public List<EditSubElementRequest> SubElements { get; set; }
+    public List<EditSubElementRequest> SubElements { get; set; } = [];
 }
