@@ -2,11 +2,13 @@
 
 namespace BlazorSalesApp.SharedApiContracts.Windows;
 
-public class CreateWindowRequest
+public class EditWindowRequest
 {
+    public long Id { get; set; }
+
     public string Name { get; set; }
 
     public int QuantityOfWindows { get; set; }
 
-    public List<CreateSubElementRequest> SubElements { get; set; }
+    public List<EditSubElementRequest> SubElements { get; set; }
 }

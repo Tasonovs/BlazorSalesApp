@@ -2,10 +2,8 @@
 
 namespace BlazorSalesApp.SharedApiContracts.SubElements;
 
-public class SubElementDto
+public class SubElementDto : BaseEntityDto
 {
-    public long Id { get; set; }
-
     public LookupViewModel Type { get; set; }
 
     public int Width { get; set; }

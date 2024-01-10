@@ -3,10 +3,8 @@ using BlazorSalesApp.SharedApiContracts.Windows;
 
 namespace BlazorSalesApp.SharedApiContracts.Orders;
 
-public class OrderDto
+public class OrderDto : BaseEntityDto
 {
-    public long Id { get; set; }
-
     public string Name { get; set; }
 
     public LookupViewModel State { get; set; }

@@ -1,11 +1,10 @@
-﻿using BlazorSalesApp.SharedApiContracts.SubElements;
+﻿using BlazorSalesApp.SharedApiContracts.Common;
+using BlazorSalesApp.SharedApiContracts.SubElements;
 
 namespace BlazorSalesApp.SharedApiContracts.Windows;
 
-public class WindowDto
+public class WindowDto : BaseEntityDto
 {
-    public long Id { get; set; }
-
     public string Name { get; set; }
 
     public int QuantityOfWindows { get; set; }
